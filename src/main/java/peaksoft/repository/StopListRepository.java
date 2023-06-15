@@ -1,4 +1,7 @@
-package peaksoft.config.repository;
+package peaksoft.repository;
 
-public interface StopListRepository extends org.springframework.data.jpa.repository.JpaRepository<peaksoft.entity.StopList, java.lang.Long> {
+import org.springframework.data.jpa.repository.JpaRepository;
+import peaksoft.entity.StopList;
+
+public interface StopListRepository extends JpaRepository<StopList, Long> {
 }

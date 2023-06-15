@@ -1,2 +1,21 @@
-package peaksoft.service;public interface RestaurantService {
+package peaksoft.service;
+
+import peaksoft.dto.SimpleResponse;
+import peaksoft.dto.restaurant.restaurantRequest.RestaurantRequest;
+import peaksoft.dto.restaurant.restaurantResponse.RestaurantResponse;
+
+import java.util.List;
+
+public interface RestaurantService {
+
+    SimpleResponse saveRestaurant(RestaurantRequest restaurantRequest);
+
+    List<RestaurantResponse> getAllRestaurantResponse();
+
+    RestaurantResponse getRestaurantResponseById(Long restaurantId);
+
+    SimpleResponse updateRestaurant(Long Id, RestaurantRequest restaurantRequest);
+
+    SimpleResponse deleteRestaurantRequest(Long id);
 }
+

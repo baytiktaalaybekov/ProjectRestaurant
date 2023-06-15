@@ -1,2 +1,4 @@
-package peaksoft.api;public class SubcategoryApi {
+package peaksoft.api;
+
+public class SubcategoryApi {
 }

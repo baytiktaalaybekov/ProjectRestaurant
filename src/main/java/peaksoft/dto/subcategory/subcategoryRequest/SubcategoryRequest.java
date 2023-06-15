@@ -1,2 +1,4 @@
-package peaksoft.dto.subcategory.subcategoryRequest;public class SubcategoryRequest {
+package peaksoft.dto.subcategory.subcategoryRequest;
+
+public class SubcategoryRequest {
 }

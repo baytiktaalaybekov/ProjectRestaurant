@@ -1,2 +1,4 @@
-package peaksoft.service.Impl;public class ChequesSeImpl {
+package peaksoft.service.Impl;
+
+public class ChequesSeImpl {
 }

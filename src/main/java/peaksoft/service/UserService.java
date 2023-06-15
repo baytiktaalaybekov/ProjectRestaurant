@@ -1,2 +1,24 @@
-package peaksoft.service;public interface WaterService {
+package peaksoft.service;
+
+import peaksoft.dto.SimpleResponse;
+import peaksoft.dto.user.userRequest.UserRequest;
+import peaksoft.dto.user.userResponse.UserResponse;
+import peaksoft.dto.user.userResponse.UserResponses;
+
+import java.util.List;
+
+public interface UserService {
+
+    UserResponses authenticate(UserRequest userRequest);
+
+    SimpleResponse save(UserRequest userRequest);
+
+    List<UserResponse> getAllUsers();
+
+    UserResponse getUserResponseById(Long id);
+
+    SimpleResponse update(Long id,UserRequest userRequest);
+
+    SimpleResponse deleteUser(Long Id);
+
 }

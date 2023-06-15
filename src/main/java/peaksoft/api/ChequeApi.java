@@ -1,2 +1,4 @@
-package peaksoft.api;public class ChequeApi {
+package peaksoft.api;
+
+public class ChequeApi {
 }

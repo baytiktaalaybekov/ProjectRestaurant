@@ -1,2 +1,4 @@
-package peaksoft.api;public class MenuItemApi {
+package peaksoft.api;
+
+public class MenuItemApi {
 }

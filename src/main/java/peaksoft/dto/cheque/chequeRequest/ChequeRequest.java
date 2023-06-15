@@ -1,2 +1,4 @@
-package peaksoft.dto.cheque.chequeRequest;public class ChequeRequest {
+package peaksoft.dto.cheque.chequeRequest;
+
+public class ChequeRequest {
 }

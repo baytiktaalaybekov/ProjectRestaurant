@@ -1,2 +1,24 @@
-package peaksoft.dto.registr;public class AuthenticationResponse {
+package peaksoft.dto.registr;
+
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@Builder
+public class AuthenticationResponse {
+
+    private String token;
+
+    private String email;
+
+
+    public AuthenticationResponse(String token, String email) {
+        this.token = token;
+        this.email = email;
+    }
+
+    public AuthenticationResponse() {
+    }
 }

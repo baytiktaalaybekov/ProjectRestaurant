@@ -1,2 +1,4 @@
-package peaksoft.service.Impl;public class StopListSerImpl {
+package peaksoft.service.Impl;
+
+public class StopListSerImpl {
 }

@@ -1,4 +1,7 @@
-package peaksoft.config.repository;
+package peaksoft.repository;
 
-public interface SubCategoryRepository extends org.springframework.data.jpa.repository.JpaRepository<peaksoft.entity.SubCategory, java.lang.Long> {
+import org.springframework.data.jpa.repository.JpaRepository;
+import peaksoft.entity.SubCategory;
+
+public interface SubCategoryRepository extends JpaRepository<SubCategory, Long> {
 }

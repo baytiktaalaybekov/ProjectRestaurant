@@ -1,2 +1,4 @@
-package peaksoft.service;public interface SubcategoryService {
+package peaksoft.service;
+
+public interface SubcategoryService {
 }

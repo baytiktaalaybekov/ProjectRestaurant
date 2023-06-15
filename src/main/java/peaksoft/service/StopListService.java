@@ -1,2 +1,4 @@
-package peaksoft.service;public interface StopListService {
+package peaksoft.service;
+
+public interface StopListService {
 }

@@ -1,2 +1,4 @@
-package peaksoft.dto.stopList.stopListResponse;public class StopListResponse {
+package peaksoft.dto.stopList.stopListResponse;
+
+public class StopListResponse {
 }

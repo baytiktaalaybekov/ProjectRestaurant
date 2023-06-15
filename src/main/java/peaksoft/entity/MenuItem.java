@@ -3,7 +3,6 @@ package peaksoft.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,9 +38,11 @@ public class MenuItem {
 
    @ManyToOne(cascade = {CascadeType.REFRESH,CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST})
     private SubCategory subcategory;
-   public void addCheque(Cheque cheque){
-       cheques.add(cheque);
-   }
+
+//
+//   public void addCheque(Cheque cheque){
+//       cheques.add(cheque);
+//   }
 
 
 

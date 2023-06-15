@@ -1,2 +1,4 @@
-package peaksoft.service.Impl;public class SubcategorySeImpl {
+package peaksoft.service.Impl;
+
+public class SubcategorySeImpl {
 }

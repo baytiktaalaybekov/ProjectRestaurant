@@ -1,2 +1,4 @@
-package peaksoft.service;public interface ChequesService {
+package peaksoft.service;
+
+public interface ChequesService {
 }

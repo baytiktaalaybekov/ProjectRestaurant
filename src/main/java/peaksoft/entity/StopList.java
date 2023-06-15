@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "stopList")
@@ -19,7 +20,7 @@ public class StopList {
     @GeneratedValue(generator = "stopList_id_gen",strategy = GenerationType.SEQUENCE)
     private Long id;
     private String reason;
-    private LocalDate date;
+    private ZonedDateTime date;
 
     @OneToOne(cascade = {CascadeType.REFRESH,CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST})
     private MenuItem menuItem;

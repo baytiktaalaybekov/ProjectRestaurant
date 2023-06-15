@@ -38,7 +38,8 @@ public class JwtFilter extends OncePerRequestFilter {
             try {
                 if (StringUtils.hasText(token)) {
                     String username = jwtUtil.validateToken(token);
-                    User user = userRepository.findByEmail(username).orElseThrow(() -> new EntityNotFoundException("user with email: " + username + " is not found"));
+                    User user = userRepository.findByEmail(username).orElseThrow(() -> new EntityNotFoundException
+                            ("user with email: " + username + " is not found"));
 
                     SecurityContextHolder.getContext()
                             .setAuthentication(

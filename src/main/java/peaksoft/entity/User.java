@@ -7,7 +7,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import peaksoft.enums.Role;
 
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -17,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
+@Builder
 public class User implements UserDetails {
     @Id
     @SequenceGenerator(name = "user_id_gen"
@@ -31,7 +32,7 @@ public class User implements UserDetails {
     private String lastName;
 
     @Column(name = "date_of_birth")
-    private LocalDate dateOfBirth;
+    private ZonedDateTime dateOfBirth;
 
     private String email;
 

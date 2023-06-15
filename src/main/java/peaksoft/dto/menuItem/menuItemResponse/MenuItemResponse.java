@@ -1,2 +1,4 @@
-package peaksoft.dto.menuItem.menuItemResponse;public class MenuItemResponse {
+package peaksoft.dto.menuItem.menuItemResponse;
+
+public class MenuItemResponse {
 }

@@ -1,4 +1,7 @@
-package peaksoft.config.repository;
+package peaksoft.repository;
 
-public interface MenuItemRepository extends org.springframework.data.jpa.repository.JpaRepository<peaksoft.entity.MenuItem, java.lang.Long> {
+import org.springframework.data.jpa.repository.JpaRepository;
+import peaksoft.entity.MenuItem;
+
+public interface MenuItemRepository extends JpaRepository<MenuItem, Long> {
 }
