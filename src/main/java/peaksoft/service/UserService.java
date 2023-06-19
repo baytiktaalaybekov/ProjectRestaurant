@@ -11,14 +11,17 @@ public interface UserService {
 
     UserResponses authenticate(UserRequest userRequest);
 
-    SimpleResponse save(UserRequest userRequest);
+    SimpleResponse register(UserRequest userRequest);
 
     List<UserResponse> getAllUsers();
 
     UserResponse getUserResponseById(Long id);
 
-    SimpleResponse update(Long id,UserRequest userRequest);
+    SimpleResponse update(Long id, UserRequest userRequest);
 
     SimpleResponse deleteUser(Long Id);
 
+    SimpleResponse answer(Long restaurantId, Long userId, String word);
+
+//    PaginationResponse getPagination(int size, int page);
 }

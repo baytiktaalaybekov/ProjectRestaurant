@@ -4,21 +4,16 @@ import lombok.*;
 import peaksoft.enums.Role;
 
 import java.time.LocalDate;
-
-@Getter
-@Setter
-@Builder
+@Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserResponse {
+@Builder
+public class UserRespons {
     private Long id;
     private String firstName;
     private String lastName;
     private LocalDate dateOfBirth;
     private Role role;
-//    private Long restaurantId;
-
-
-
+    private Long restaurantId;
 
 }

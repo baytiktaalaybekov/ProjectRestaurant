@@ -1,4 +1,11 @@
 package peaksoft.dto.subcategory.subcategoryRequest;
 
-public class SubcategoryRequest {
+import lombok.Builder;
+
+@Builder
+public record SubcategoryRequest(
+        String name
+) {
+
+
 }

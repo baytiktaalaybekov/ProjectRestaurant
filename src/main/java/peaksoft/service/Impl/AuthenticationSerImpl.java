@@ -15,7 +15,7 @@ import peaksoft.enums.Role;
 import peaksoft.repository.UserRepository;
 import peaksoft.service.AuthenticationService;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
@@ -31,13 +31,15 @@ public class AuthenticationSerImpl implements AuthenticationService {
             throw new EntityExistsException(String.format(
                     "User with email: %s already exists!",signUpRequest.getEmail()));
         }
+
+
         User user= User.builder()
                 .firstName(signUpRequest.getFirstName())
                 .lastName(signUpRequest.getLastName())
                 .email(signUpRequest.getEmail())
                 .password(passwordEncoder.encode(signUpRequest.getPassword()))
                 .role(Role.WAITER)
-                .dateOfBirth(ZonedDateTime.now())
+                .dateOfBirth(LocalDate.now())
                 .build();
         userRepository.save(user);
 

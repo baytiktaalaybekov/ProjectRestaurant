@@ -2,6 +2,7 @@ package peaksoft.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import peaksoft.dto.restaurant.restaurantResponse.RestaurantDetailsResponse;
 import peaksoft.dto.restaurant.restaurantResponse.RestaurantResponse;
 import peaksoft.entity.Restaurant;
 
@@ -16,4 +17,12 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
 
     @Query("select new peaksoft.dto.restaurant.restaurantResponse.RestaurantResponse(r.id,r.name,r.location)from Restaurant r where r.id= ?1")
     Optional<RestaurantResponse> getRestaurantResponseById(Long restaurantId);
+
+
+    @Query("SELECT NEW peaksoft.dto.restaurant.restaurantResponse.RestaurantDetailsResponse(r.id, COUNT(u)) " +
+            "FROM Restaurant r " +
+            "JOIN r.users u " +
+            "WHERE r.id = ?1 and u.role <> ('ADMIN') " +
+            "GROUP BY r.id, r.name")
+    List<RestaurantDetailsResponse> countUser(Long id);
 }

@@ -13,4 +13,6 @@ public class RestaurantResponse {
     private String name;
 
     private String location;
+
+
 }

@@ -1,14 +1,19 @@
 package peaksoft.service.Impl;
 
+import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import peaksoft.dto.SimpleResponse;
 import peaksoft.dto.restaurant.restaurantRequest.RestaurantRequest;
+import peaksoft.dto.restaurant.restaurantResponse.RestaurantDetailsResponse;
 import peaksoft.dto.restaurant.restaurantResponse.RestaurantResponse;
 import peaksoft.entity.Restaurant;
+import peaksoft.entity.User;
 import peaksoft.exception.NotFoundException;
 import peaksoft.repository.RestaurantRepository;
+import peaksoft.repository.UserRepository;
 import peaksoft.service.RestaurantService;
 
 import java.util.List;
@@ -17,21 +22,23 @@ import java.util.List;
 public class RestaurantServiceImpl implements RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
+    private final UserRepository userRepository;
 
     @Override
     public SimpleResponse saveRestaurant(RestaurantRequest restaurantRequest) {
-        if (restaurantRepository.existsByName(restaurantRequest.getName())) {
-            return SimpleResponse.builder()
-                    .status(HttpStatus.BAD_REQUEST)
-                    .message(String.format("Restaurant with name : %s already exists",
-                            restaurantRequest.getName()))
-                    .build();
+        if (!restaurantRepository.findAll().isEmpty()) {
+            throw new ValidationException("You mast save only 1 Restaurant");
         }
+        String email= SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByEmail(email).orElseThrow(
+                ()->new NotFoundException("User with email: %s not found".formatted(email)));
         Restaurant restaurant = new Restaurant();
         restaurant.setName(restaurantRequest.getName());
         restaurant.setLocation(restaurantRequest.getLocation());
         restaurant.setRestType(restaurantRequest.getRestType());
         restaurant.setService(restaurantRequest.getService());
+        restaurant.setNumberOfUsers(restaurantRequest.getNumberOfUsers());
+        user.setRestaurant(restaurant);
         restaurantRepository.save(restaurant);
         return SimpleResponse.builder()
                 .status(HttpStatus.OK)
@@ -76,5 +83,10 @@ public class RestaurantServiceImpl implements RestaurantService {
                 .status(HttpStatus.OK)
                 .message("Delete Restaurant ")
                 .build();
+    }
+
+    @Override
+    public List<RestaurantDetailsResponse> countUser(Long id) {
+        return restaurantRepository.countUser(id);
     }
 }

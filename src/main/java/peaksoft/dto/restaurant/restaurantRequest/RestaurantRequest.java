@@ -17,6 +17,8 @@ public class RestaurantRequest {
 
     private String location;
 
+    private int numberOfUsers;
+
     @Enumerated(EnumType.STRING)
     private RestType restType;
 

@@ -7,6 +7,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import peaksoft.enums.Role;
 
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -32,7 +33,7 @@ public class User implements UserDetails {
     private String lastName;
 
     @Column(name = "date_of_birth")
-    private ZonedDateTime dateOfBirth;
+    private LocalDate dateOfBirth;
 
     private String email;
 

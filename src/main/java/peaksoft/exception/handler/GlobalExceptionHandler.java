@@ -49,4 +49,14 @@ public class GlobalExceptionHandler {
         );
     }
 
+    @ExceptionHandler(ValidationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ExceptionResponse handleExistsException(ValidationException e) {
+        return new ExceptionResponse(
+                HttpStatus.BAD_REQUEST,
+                e.getClass().getSimpleName(),
+                e.getMessage()
+        );
+    }
+
 }

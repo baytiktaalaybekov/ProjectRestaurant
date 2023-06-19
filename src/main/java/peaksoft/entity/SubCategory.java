@@ -32,12 +32,12 @@ public class SubCategory {
     @JsonIgnore
     private Category categories;
 
-//    public void add(SubCategory subCategory) {
-//        categories.addSubCategory(subCategory);
-//    }
-//
-//
-//    public void setMenuItem(MenuItem menuItem) {
-//
-//    }
+    public void add(SubCategory subCategory) {
+        categories.addSubCategory(subCategory);
+    }
+
+
+    public void setMenuItem(MenuItem menuItem) {
+
+    }
 }

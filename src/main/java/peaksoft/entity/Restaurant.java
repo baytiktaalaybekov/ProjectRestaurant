@@ -43,15 +43,14 @@ public class Restaurant {
     @OneToMany(mappedBy = "restaurant",cascade = CascadeType.ALL)
     private List <MenuItem> menuItems=new ArrayList<>();
 
+    public void addMenuItem(MenuItem menuItem) {
+        this.menuItems.add(menuItem);
+    }
+
 //
 //    public void setNumberOfEmployees(byte b) {
 //    }
-//
-//
-//
-//    public void addMenuItem(MenuItem menuItem) {
-//        this.menuItems.add(menuItem);
-//    }
+
 //
 //    public void addUser(User user) {
 //        this.users.add(user);

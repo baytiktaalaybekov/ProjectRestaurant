@@ -2,6 +2,7 @@ package peaksoft.service;
 
 import peaksoft.dto.SimpleResponse;
 import peaksoft.dto.restaurant.restaurantRequest.RestaurantRequest;
+import peaksoft.dto.restaurant.restaurantResponse.RestaurantDetailsResponse;
 import peaksoft.dto.restaurant.restaurantResponse.RestaurantResponse;
 
 import java.util.List;
@@ -17,5 +18,7 @@ public interface RestaurantService {
     SimpleResponse updateRestaurant(Long Id, RestaurantRequest restaurantRequest);
 
     SimpleResponse deleteRestaurantRequest(Long id);
+
+    List<RestaurantDetailsResponse> countUser(Long id);
 }
 

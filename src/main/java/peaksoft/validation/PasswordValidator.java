@@ -1,4 +1,4 @@
-package peaksoft.validation;//package peaksoft.validation;
+//package peaksoft.validation;//package peaksoft.validation;
 //
 //import jakarta.validation.ConstraintValidator;
 //import jakarta.validation.ConstraintValidatorContext;
@@ -6,7 +6,7 @@ package peaksoft.validation;//package peaksoft.validation;
 //public class PasswordValidator implements ConstraintValidator<PasswordValidation,String> {
 //    @Override
 //    public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
-//        return false;
+//        return password.st;
 //    }
 //
 //    @Override

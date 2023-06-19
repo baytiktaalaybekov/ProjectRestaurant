@@ -27,8 +27,8 @@ public class Category {
     private List<SubCategory> subcategories=new ArrayList<>();
 //
 //
-//    public void addSubCategory(SubCategory subCategory)
-//    {
-//        subcategories.add(subCategory);
-//    }
+    public void addSubCategory(SubCategory subCategory)
+    {
+        subcategories.add(subCategory);
+    }
 }

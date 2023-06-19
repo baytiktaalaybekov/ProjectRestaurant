@@ -15,7 +15,6 @@ import peaksoft.service.AuthenticationService;
 @RequiredArgsConstructor
 public class AuthenticationApi {
 
-
     private final AuthenticationService authenticationSer;
 
     @PostMapping("/signUp")

@@ -30,19 +30,19 @@ public class CategoryApi {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public SimpleResponse delete(@PathVariable Long id){
         return categoryService.deleteCategoriesBiId(id);
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public CategoryResponse getById(@PathVariable Long id){
         return categoryService.getByIdCategoryId(id);
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public SimpleResponse update(@PathVariable Long id,@RequestBody CategoryRequest request){
         return categoryService.updateCategory(id,request);
     }
