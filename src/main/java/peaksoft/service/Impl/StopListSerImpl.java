@@ -81,13 +81,8 @@ public class StopListSerImpl implements StopListService {
 
     @Override
     public SimpleResponse deleteStopListById(Long id) {
-        if (!menuItemRepository.existsById(id)) {
-            return SimpleResponse.builder()
-                    .status(HttpStatus.NOT_FOUND)
-                    .message(String.format("StopList with id: %s doesn't exist", id))
-                    .build();
-        }
-        stopListRepository.deleteById(id);
+        StopList stopList=  stopListRepository.findById(id).orElseThrow(()->new NotFoundException("StopList with id not found"));
+        stopListRepository.delete(stopList);
         return SimpleResponse.builder()
                 .status(HttpStatus.OK)
                 .message(String.format("StopList with id: %s successfully deleted", id))

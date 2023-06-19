@@ -48,10 +48,6 @@ public class ChequeApi {
         return chequesService.updateCheque(chequeId, chequeRequest);
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @PostMapping("/assign")
-    public SimpleResponse assign(@RequestBody AssignRequest assignRequest) {
-        return chequesService.assignChequeToMenuItem(assignRequest);
-    }
+
 
 }

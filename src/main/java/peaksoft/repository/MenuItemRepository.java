@@ -38,4 +38,6 @@ public interface MenuItemRepository extends JpaRepository<MenuItem, Long> {
             " or m.subcategory.categories.name ilike concat('%', :keyWord, '%')")
     List<MenuItemResponse> searchAllByKeyWord(String keyWord);
 
+    Optional<MenuItem> findMenuItemByName(String menuItemName);
+
 }

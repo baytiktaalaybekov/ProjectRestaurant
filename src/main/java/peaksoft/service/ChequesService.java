@@ -19,5 +19,4 @@ public interface ChequesService {
 
     SimpleResponse deleteByIdCheque(Long chequeId);
 
-    SimpleResponse assignChequeToMenuItem (AssignRequest assignRequest);
 }

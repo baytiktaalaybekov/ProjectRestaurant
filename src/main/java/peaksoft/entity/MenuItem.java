@@ -26,7 +26,7 @@ public class MenuItem {
 
     private Boolean isVegetarian;
 
-    @ManyToMany(cascade = {CascadeType.REFRESH,CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST})
+    @ManyToMany(cascade = {CascadeType.ALL})
     private List<Cheque> cheques = new ArrayList<>();
 
     @ManyToOne(cascade = {CascadeType.REFRESH,CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST})
@@ -39,10 +39,12 @@ public class MenuItem {
    @ManyToOne(cascade = {CascadeType.REFRESH,CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST})
     private SubCategory subcategory;
 
-//
-//   public void addCheque(Cheque cheque){
-//       cheques.add(cheque);
-//   }
+
+
+
+   public void addCheque(Cheque cheque){
+       cheques.add(cheque);
+   }
 
 
 

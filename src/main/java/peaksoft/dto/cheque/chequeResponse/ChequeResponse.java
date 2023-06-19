@@ -18,13 +18,13 @@ public class ChequeResponse {
 
     private List<MenuItem> items;
 
-    private BigDecimal priceAverage;
+    private int priceAverage;
 
     private int service;
 
-    private BigDecimal grandTotal;
+    private int grandTotal;
 
-    public ChequeResponse(Long id, String fullName, List<MenuItem> items, BigDecimal priceAverage, int service, BigDecimal grandTotal) {
+    public ChequeResponse(Long id, String fullName, List<MenuItem> items, int priceAverage, int service, int grandTotal) {
         this.id = id;
         this.fullName = fullName;
         this.items = items;

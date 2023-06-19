@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,24 +25,22 @@ public class Cheque {
 
     private ZonedDateTime createdAt;
 
-    private int grandTotal;
-
 
     @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
     private User users;
 
-    @ManyToMany(mappedBy = "cheques", cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @ManyToMany( cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     private List<MenuItem> menuItems;
 
 
-//    public void setUser(User user) {
-//        this.users=user;
-//    }
-//
-//    public void addMenuItem(MenuItem menuItem) {
-//        if (menuItems == null){
-//            menuItems = new ArrayList<>();
-//        }
-//        menuItems.add(menuItem);
-//    }
+    public void setUser(User user) {
+        this.users=user;
+    }
+
+    public void addMenuItem(MenuItem menuItem) {
+        if (menuItems == null){
+            menuItems = new ArrayList<>();
+        }
+        menuItems.add(menuItem);
+    }
 }
