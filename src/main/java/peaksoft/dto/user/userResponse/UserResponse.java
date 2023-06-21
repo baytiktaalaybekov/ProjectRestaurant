@@ -16,7 +16,6 @@ public class UserResponse {
     private String lastName;
     private LocalDate dateOfBirth;
     private Role role;
-//    private Long restaurantId;
 
 
 

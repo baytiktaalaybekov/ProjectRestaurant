@@ -4,12 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import peaksoft.dto.SimpleResponse;
-
+import peaksoft.dto.pagination.PaginationUserResponse;
 import peaksoft.dto.user.userRequest.UserRequest;
 import peaksoft.dto.user.userResponse.UserResponse;
 import peaksoft.service.UserService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -32,8 +30,8 @@ public class UserApi {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
-    public List<UserResponse> getAllUSer() {
-        return userService.getAllUsers();
+    public PaginationUserResponse getAllUSer(@RequestParam int pageSize, int currentPage) {
+        return userService.getAllUsers(pageSize, currentPage);
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN','WAITER,CHEF')")
@@ -53,12 +51,6 @@ public class UserApi {
     public SimpleResponse answer(@PathVariable Long restaurantId, @PathVariable Long userId, @RequestParam String word) {
         return userService.answer(restaurantId, userId, word);
     }
-
-//    @PreAuthorize("hasAuthority('ADMIN')")
-//    @GetMapping("/pagination")
-//    public PaginationResponse getPagination(@RequestParam int page, @RequestParam int size) {
-//        return userService.getPagination(page, size);
-//    }
 
 
 }

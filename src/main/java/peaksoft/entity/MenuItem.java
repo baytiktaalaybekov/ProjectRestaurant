@@ -26,7 +26,7 @@ public class MenuItem {
 
     private Boolean isVegetarian;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(mappedBy = "menuItems",cascade = {CascadeType.ALL})
     private List<Cheque> cheques = new ArrayList<>();
 
     @ManyToOne(cascade = {CascadeType.REFRESH,CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST})

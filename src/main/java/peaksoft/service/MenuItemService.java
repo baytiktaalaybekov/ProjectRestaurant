@@ -3,6 +3,7 @@ package peaksoft.service;
 import peaksoft.dto.SimpleResponse;
 import peaksoft.dto.menuItem.menuItemRequest.MenuItemRequest;
 import peaksoft.dto.menuItem.menuItemResponse.MenuItemResponse;
+import peaksoft.dto.pagination.PaginationMenuItemResponse;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
@@ -12,7 +13,7 @@ public interface MenuItemService {
 
     SimpleResponse saveManu( MenuItemRequest menuRequest);
 
-    List<MenuItemResponse> getAllMenus();
+    PaginationMenuItemResponse getAllMenus(int pageSize, int currentPage);
 
     MenuItemResponse getByMenuId(Long menuId);
 

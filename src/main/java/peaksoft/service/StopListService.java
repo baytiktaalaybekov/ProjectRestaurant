@@ -1,6 +1,7 @@
 package peaksoft.service;
 
 import peaksoft.dto.SimpleResponse;
+import peaksoft.dto.pagination.PaginationStopListResponse;
 import peaksoft.dto.stopList.stopListRequest.StopListRequest;
 import peaksoft.dto.stopList.stopListResponse.StopListResponse;
 
@@ -11,7 +12,7 @@ public interface StopListService {
 
     SimpleResponse saveStopList(StopListRequest stopListRequest);
 
-    List<StopListResponse> getAllStopList();
+    PaginationStopListResponse getAllStopList(int pageSize,int currentPage);
 
     StopListResponse getStopListById(Long id);
 

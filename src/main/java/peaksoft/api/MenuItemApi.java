@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import peaksoft.dto.SimpleResponse;
 import peaksoft.dto.menuItem.menuItemRequest.MenuItemRequest;
 import peaksoft.dto.menuItem.menuItemResponse.MenuItemResponse;
+import peaksoft.dto.pagination.PaginationMenuItemResponse;
 import peaksoft.service.MenuItemService;
 
 import java.util.List;
@@ -25,8 +26,8 @@ public class MenuItemApi {
     }
 
     @GetMapping
-    public List<MenuItemResponse> getAllMenuAndItem() {
-        return menuItemService.getAllMenus();
+    public PaginationMenuItemResponse getAllMenuAndItem(@RequestParam int pageSize, int currentPage) {
+        return menuItemService.getAllMenus(pageSize, currentPage);
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN','CHEF')")

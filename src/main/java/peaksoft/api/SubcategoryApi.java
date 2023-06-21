@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import peaksoft.dto.SimpleResponse;
+import peaksoft.dto.pagination.PaginationSubCategoryResponse;
 import peaksoft.dto.subcategory.subcategoryRequest.SubcategoryRequest;
 import peaksoft.dto.subcategory.subcategoryResponse.SubcategoryResponse;
 import peaksoft.entity.SubCategory;
@@ -11,7 +12,7 @@ import peaksoft.service.SubcategoryService;
 
 import java.util.List;
 import java.util.Map;
-//todo Baytik
+
 @RestController
 @RequestMapping("/subcategories")
 @RequiredArgsConstructor
@@ -21,45 +22,45 @@ public class SubcategoryApi {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/{categoryId}")
-    public SimpleResponse save(@PathVariable Long categoryId, @RequestBody SubcategoryRequest subcategoryRequest){
-        return subcategoryService.save(categoryId,subcategoryRequest);
+    public SimpleResponse save(@PathVariable Long categoryId, @RequestBody SubcategoryRequest subcategoryRequest) {
+        return subcategoryService.save(categoryId, subcategoryRequest);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
-    public List<SubcategoryResponse> getAllSubcategory (){
-        return subcategoryService.getAllBySubCategory();
+    public PaginationSubCategoryResponse getAllSubcategory(@RequestParam int pageSize, int currentPage) {
+        return subcategoryService.getAllBySubCategory(pageSize, currentPage);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/{id}")
-    public SimpleResponse update (@PathVariable Long id,@RequestBody SubcategoryRequest subcategoryRequest){
-        return subcategoryService.update(id,subcategoryRequest);
+    public SimpleResponse update(@PathVariable Long id, @RequestBody SubcategoryRequest subcategoryRequest) {
+        return subcategoryService.update(id, subcategoryRequest);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/{id}")
-    public SubcategoryResponse getById(@PathVariable Long id){
+    public SubcategoryResponse getById(@PathVariable Long id) {
         return subcategoryService.getSubCategoryById(id);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{id}")
-    public SimpleResponse delete(@PathVariable Long id){
+    public SimpleResponse delete(@PathVariable Long id) {
         return subcategoryService.delete(id);
     }
 
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/find")
-    public Map<String,List<SubCategory>> findAllGroupByCategory(){
+    public Map<String, List<SubCategory>> findAllGroupByCategory() {
         return subcategoryService.findAllGroupByCategory();
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/order/{categoryId}")
-    public List<SubcategoryResponse> getAllSubCategoryOrderByCategoryName(@PathVariable Long categoryId,@RequestParam(required = false) String ascOrDesc){
-        return subcategoryService.getAllSubCategoryOrderByCategoryName(categoryId,ascOrDesc);
+    public List<SubcategoryResponse> getAllSubCategoryOrderByCategoryName(@PathVariable Long categoryId, @RequestParam(required = false) String ascOrDesc) {
+        return subcategoryService.getAllSubCategoryOrderByCategoryName(categoryId, ascOrDesc);
     }
 
 

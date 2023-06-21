@@ -3,13 +3,15 @@ package peaksoft.api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import peaksoft.dto.AssignRequest;
 import peaksoft.dto.SimpleResponse;
+import peaksoft.dto.cheque.chequeRequest.CheckOneDayUserRequest;
 import peaksoft.dto.cheque.chequeRequest.ChequeRequest;
+import peaksoft.dto.cheque.chequeResponse.CheckOneDayUserResponse;
 import peaksoft.dto.cheque.chequeResponse.ChequeResponse;
+import peaksoft.dto.pagination.PaginationChequeResponse;
+import peaksoft.dto.restaurant.restaurantRequest.CheckOneDayRestaurantRequest;
+import peaksoft.dto.restaurant.restaurantResponse.CheckOneDayRestaurantResponse;
 import peaksoft.service.ChequesService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/cheques")
@@ -26,8 +28,8 @@ public class ChequeApi {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
-    public List<ChequeResponse> getAllCheque() {
-        return chequesService.getAllCheques();
+    public PaginationChequeResponse getAllCheque(@RequestParam int pageSize, int currentPage) {
+        return chequesService.getAllCheques(pageSize, currentPage);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -48,6 +50,16 @@ public class ChequeApi {
         return chequesService.updateCheque(chequeId, chequeRequest);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("/userTotal")
+    public CheckOneDayUserResponse findAllChequesOneDayTotalAmount(@RequestBody CheckOneDayUserRequest checkOneDayUserRequest) {
+        return chequesService.totalSumByUser(checkOneDayUserRequest);
+    }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("/restTotal")
+    public CheckOneDayRestaurantResponse checkOneDayRestaurantResponse(@RequestBody CheckOneDayRestaurantRequest checkOneDayRestaurantRequest) {
+        return chequesService.totalAvgByRestaurant(checkOneDayRestaurantRequest);
+    }
 
 }

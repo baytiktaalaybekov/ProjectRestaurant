@@ -25,25 +25,26 @@ public class JwtUtil {
     @Value("${spring.jwt.secret-key}")
     private String SECRET_KEY;
 
-    public String generatorToken(UserDetails userDetails){
+    public String generatorToken(UserDetails userDetails) {
         return JWT.create()
-                .withClaim("username",userDetails.getUsername())
+                .withClaim("username", userDetails.getUsername())
                 .withIssuedAt(new Date())
                 .withExpiresAt(Date.from(ZonedDateTime.now().plusMinutes(60).toInstant()))
                 .sign(Algorithm.HMAC256(SECRET_KEY));
     }
 
-    public String validateToken(String token){
-        JWTVerifier jwtVerifier=JWT
+    public String validateToken(String token) {
+        JWTVerifier jwtVerifier = JWT
                 .require(
                         Algorithm.HMAC256(SECRET_KEY))
                 .build();
 
         DecodedJWT jwt = jwtVerifier.verify(token);
         return jwt.getClaim("username").asString();
+
     }
 
-   public User getAuthentication() {
+    public User getAuthentication() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         return userRepository.findByEmail(email).orElseThrow(() ->

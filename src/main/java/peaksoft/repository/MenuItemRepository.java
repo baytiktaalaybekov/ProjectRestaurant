@@ -1,5 +1,7 @@
 package peaksoft.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,7 +14,7 @@ import java.util.Optional;
 public interface MenuItemRepository extends JpaRepository<MenuItem, Long> {
 
     @Query("select new peaksoft.dto.menuItem.menuItemResponse.MenuItemResponse(m.id,m.name,m.image,m.price,m.description,m.isVegetarian) from MenuItem m")
-    List<MenuItemResponse> getAllMenus();
+    Page<MenuItemResponse> getAllMenus(Pageable pageable);
 
     @Query("select new peaksoft.dto.menuItem.menuItemResponse.MenuItemResponse(m.id,m.name,m.image,m.price,m.description,m.isVegetarian) from MenuItem m where m.id= :menuId")
     Optional<MenuItemResponse> getByMenuId(Long menuId);

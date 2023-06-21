@@ -1,5 +1,7 @@
 package peaksoft.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import peaksoft.dto.stopList.stopListResponse.StopListResponse;
@@ -12,7 +14,7 @@ import java.util.Optional;
 public interface StopListRepository extends JpaRepository<StopList, Long> {
 
     @Query("select new peaksoft.dto.stopList.stopListResponse.StopListResponse(s.id,s.reason,s.date,s.menuItem.name) from StopList s")
-    List<StopListResponse> getAllStopList();
+    Page<StopListResponse> getAllStopList(Pageable pageable);
 
     @Query("select new peaksoft.dto.stopList.stopListResponse.StopListResponse(s.id,s.reason,s.date,s.menuItem.name) from StopList s where s.id= :id")
     Optional<StopListResponse> getStopListById(Long id);

@@ -2,6 +2,7 @@ package peaksoft.service;
 
 import org.springframework.data.repository.query.Param;
 import peaksoft.dto.SimpleResponse;
+import peaksoft.dto.pagination.PaginationSubCategoryResponse;
 import peaksoft.dto.subcategory.subcategoryRequest.SubcategoryRequest;
 import peaksoft.dto.subcategory.subcategoryResponse.SubcategoryResponse;
 import peaksoft.entity.SubCategory;
@@ -13,7 +14,7 @@ public interface SubcategoryService {
 
     SimpleResponse save(Long categoryId, SubcategoryRequest subCategoryRequest);
 
-    List<SubcategoryResponse> getAllBySubCategory();
+   PaginationSubCategoryResponse getAllBySubCategory(int pageSize,int currentPage);
 
     SubcategoryResponse getSubCategoryById(Long subId);
 

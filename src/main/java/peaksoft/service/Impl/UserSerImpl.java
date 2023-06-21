@@ -3,6 +3,9 @@ package peaksoft.service.Impl;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -10,12 +13,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import peaksoft.config.jwt.JwtUtil;
 import peaksoft.dto.SimpleResponse;
+import peaksoft.dto.pagination.PaginationUserResponse;
 import peaksoft.dto.user.userRequest.UserRequest;
 import peaksoft.dto.user.userResponse.UserResponse;
 import peaksoft.dto.user.userResponse.UserResponses;
 import peaksoft.entity.Restaurant;
 import peaksoft.entity.User;
 import peaksoft.enums.Role;
+import peaksoft.exception.BadRequestException;
 import peaksoft.exception.NotFoundException;
 import peaksoft.repository.RestaurantRepository;
 import peaksoft.repository.UserRepository;
@@ -23,7 +28,6 @@ import peaksoft.service.UserService;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -99,6 +103,11 @@ public class UserSerImpl implements UserService {
                         .build();
             }
         }
+        Restaurant restaurant=restaurantRepository.findById(1L).orElseThrow(()->new NotFoundException("Not"));
+        var count=restaurant.getUsers().size();
+        if(count>15){
+            throw new BadRequestException("Not vacancy");
+        }
         User user = new User();
         userMapToResponse(userRequest, user);
         userRepository.save(user);
@@ -129,8 +138,15 @@ public class UserSerImpl implements UserService {
 
 
     @Override
-    public List<UserResponse> getAllUsers() {
-        return userRepository.getAllUsers();
+    public PaginationUserResponse getAllUsers(int pageSize,int currentPage) {
+        Pageable pageable= PageRequest.of(currentPage-1,pageSize);
+        Page<UserResponse> allUsers=userRepository.getAllUsers(pageable);
+        return PaginationUserResponse
+                .builder()
+                .users(allUsers.getContent())
+                .page(allUsers.getNumber()+1)
+                .size(allUsers.getTotalPages())
+                .build();
     }
 
     @Override
@@ -203,17 +219,6 @@ public class UserSerImpl implements UserService {
         }
     }
 
-//    @Override
-//    public PaginationResponse getPagination(int page, int size) {
-//        Pageable pageable= PageRequest.of( page-1,size);
-//        Page<UserResponse> users = userRepository.getAllUsers(pageable);
-//        return PaginationResponse
-//                .builder()
-//                .users(users.getContent())
-//                .currentPage(users.getNumber()+1)
-//                .currentPage(users.getTotalPages())
-//                .build();
-//    }
 
 
     private void userMapToResponse(UserRequest userRequest, User user1) {

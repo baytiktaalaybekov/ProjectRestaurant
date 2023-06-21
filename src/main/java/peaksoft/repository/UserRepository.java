@@ -21,13 +21,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 
     @Query("select new peaksoft.dto.user.userResponse.UserResponse(u.id,u.firstName,u.lastName,u.dateOfBirth,u.role)from User u")
-    List<UserResponse> getAllUsers();
+    Page<UserResponse> getAllUsers(Pageable pageable);
 
     @Query("select new peaksoft.dto.user.userResponse.UserResponse(u.id,u.firstName,u.lastName,u.dateOfBirth,u.role)from User u where u.id=:id")
     Optional<UserResponse> getUserResponseById(Long id);
 
 //    @Query("select new peaksoft.dto.user.userResponse.UserResponse(u.id,u.firstName,u.lastName,u.dateOfBirth,u.role)from User u")
-//    Page<UserResponse> getAllUsers(Pageable pageable);
+//    Page<UserResponse> getAllUsers();
 
 
 }

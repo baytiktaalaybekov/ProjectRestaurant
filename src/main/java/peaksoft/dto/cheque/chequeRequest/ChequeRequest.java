@@ -9,7 +9,6 @@ public class ChequeRequest {
 
     private Long userId;
 
-//    private List<String> menuItemNames;
     private List<Long> menuItemNames;
 
 

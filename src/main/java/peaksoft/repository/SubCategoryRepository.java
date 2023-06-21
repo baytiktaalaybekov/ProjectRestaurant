@@ -1,5 +1,7 @@
 package peaksoft.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,7 +14,7 @@ import java.util.Optional;
 public interface SubCategoryRepository extends JpaRepository<SubCategory, Long> {
 
     @Query("select new peaksoft.dto.subcategory.subcategoryResponse.SubcategoryResponse(s.id, s.name,s.categories.name,s.categories.id) from SubCategory s")
-    List<SubcategoryResponse> getAllSubCategory();
+    Page<SubcategoryResponse> getAllSubCategory(Pageable pageable);
 
 
     @Query("select new peaksoft.dto.subcategory.subcategoryResponse.SubcategoryResponse(s.id, s.name,s.categories.name,s.categories.id) from SubCategory s where s.id= :subId")

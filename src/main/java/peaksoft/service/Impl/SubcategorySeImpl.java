@@ -2,11 +2,17 @@ package peaksoft.service.Impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import peaksoft.dto.SimpleResponse;
+import peaksoft.dto.pagination.PaginationSubCategoryResponse;
+import peaksoft.dto.pagination.PaginationUserResponse;
 import peaksoft.dto.subcategory.subcategoryRequest.SubcategoryRequest;
 import peaksoft.dto.subcategory.subcategoryResponse.SubcategoryResponse;
+import peaksoft.dto.user.userResponse.UserResponse;
 import peaksoft.entity.Category;
 import peaksoft.entity.SubCategory;
 import peaksoft.exception.BadRequestException;
@@ -45,8 +51,15 @@ public class SubcategorySeImpl implements SubcategoryService {
     }
 
     @Override
-    public List<SubcategoryResponse> getAllBySubCategory() {
-        return subCategoryRepository.getAllSubCategory();
+    public PaginationSubCategoryResponse getAllBySubCategory(int pageSize,int currentPage) {
+        Pageable pageable= PageRequest.of(currentPage-1,pageSize);
+        Page<SubcategoryResponse> allUsers=subCategoryRepository.getAllSubCategory(pageable);
+        return PaginationSubCategoryResponse
+                .builder()
+                .users(allUsers.getContent())
+                .page(allUsers.getNumber()+1)
+                .size(allUsers.getTotalPages())
+                .build();
     }
 
     @Override

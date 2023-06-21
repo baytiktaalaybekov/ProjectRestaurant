@@ -37,10 +37,5 @@ public class Cheque {
         this.users=user;
     }
 
-    public void addMenuItem(MenuItem menuItem) {
-        if (menuItems == null){
-            menuItems = new ArrayList<>();
-        }
-        menuItems.add(menuItem);
-    }
+
 }

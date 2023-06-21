@@ -1,19 +1,32 @@
 package peaksoft.service.Impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import peaksoft.config.jwt.JwtUtil;
 import peaksoft.dto.SimpleResponse;
+import peaksoft.dto.cheque.chequeRequest.CheckOneDayUserRequest;
 import peaksoft.dto.cheque.chequeRequest.ChequeRequest;
+import peaksoft.dto.cheque.chequeResponse.CheckOneDayUserResponse;
 import peaksoft.dto.cheque.chequeResponse.ChequeResponse;
+import peaksoft.dto.pagination.PaginationChequeResponse;
+import peaksoft.dto.pagination.PaginationUserResponse;
+import peaksoft.dto.restaurant.restaurantRequest.CheckOneDayRestaurantRequest;
+import peaksoft.dto.restaurant.restaurantResponse.CheckOneDayRestaurantResponse;
+import peaksoft.dto.user.userResponse.UserResponse;
 import peaksoft.entity.Cheque;
 import peaksoft.entity.MenuItem;
+import peaksoft.entity.Restaurant;
 import peaksoft.entity.User;
-import peaksoft.exception.BadRequestException;
+import peaksoft.enums.Role;
+import peaksoft.exception.AlreadyExistException;
 import peaksoft.exception.NotFoundException;
 import peaksoft.repository.ChequeRepository;
 import peaksoft.repository.MenuItemRepository;
+import peaksoft.repository.RestaurantRepository;
 import peaksoft.repository.UserRepository;
 import peaksoft.service.ChequesService;
 
@@ -29,33 +42,10 @@ public class ChequesSeImpl implements ChequesService {
     private final MenuItemRepository menuItemRepository;
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
+    private final RestaurantRepository restaurantRepository;
 
     @Override
     public SimpleResponse saveCheque(ChequeRequest chequeRequest) {
-//        List<MenuItem> menuItems = new ArrayList<>();
-//        User authentication = jwtUtil.getAuthentication();
-//        int priceAverage = 0;
-//        if (chequeRequest.getMenuItemNames().isEmpty()) {
-//            throw new BadRequestException("You not must be empty ");
-//        } else {
-//            for (String menuItemName : chequeRequest.getMenuItemNames()) {
-//                MenuItem menuItem = menuItemRepository.findMenuItemByName(menuItemName).orElseThrow();
-//                priceAverage += menuItem.getPrice();
-//                menuItems.add(menuItem);
-//            }
-//        }
-//        Cheque cheque = new Cheque();
-//        cheque.setUsers(authentication);
-//        cheque.setMenuItems(menuItems);
-//        cheque.setCreatedAt(ZonedDateTime.now());
-//        cheque.setPriceAverage(priceAverage);
-//        chequeRepository.save(cheque);
-//        return SimpleResponse
-//                .builder()
-//                .status(HttpStatus.OK)
-//                .message("Cheque save")
-//                .build();
-
         User user = userRepository.findById(chequeRequest.getUserId()).orElseThrow();
         Cheque cheque = new Cheque();
         List<MenuItem> menuItemList = new ArrayList<>();
@@ -72,41 +62,102 @@ public class ChequesSeImpl implements ChequesService {
         cheque.setMenuItems(menuItemList);
         chequeRepository.save(cheque);
         return SimpleResponse.builder().status(HttpStatus.OK).message("Successfully saved!!").build();
+
     }
 
     @Override
-    public List<ChequeResponse> getAllCheques() {
-        return null;
+    public PaginationChequeResponse getAllCheques(int pageSize, int currentPage) {
+        Pageable pageable= PageRequest.of(currentPage-1,pageSize);
+        Page<ChequeResponse> allUsers=chequeRepository.getAllCheques(pageable);
+        return PaginationChequeResponse
+                .builder()
+                .users(allUsers.getContent())
+                .page(allUsers.getNumber()+1)
+                .size(allUsers.getTotalPages())
+                .build();
+
     }
 
     @Override
     public ChequeResponse getByIdCheque(Long chequeId) {
-        Cheque cheque = chequeRepository.findById(chequeId).orElseThrow
-                (() -> new NotFoundException("Cheque with id: " + chequeId + " is no exist!"));
-        ChequeResponse chequeResponse = new ChequeResponse();
-        chequeResponse.setId(cheque.getId());
-        chequeResponse.setFullName(cheque.getUsers().getFirstName() + cheque.getUsers().getLastName());
-        chequeResponse.setItems(cheque.getMenuItems());
-        chequeResponse.setPriceAverage(cheque.getPriceAverage());
-        chequeResponse.setService(cheque.getUsers().getRestaurant().getService());
-        return chequeResponse;
+        return null;
+
     }
 
     @Override
     public SimpleResponse updateCheque(Long chequeIdd, ChequeRequest chequeRequest) {
-        return null;
+        Cheque cheque = chequeRepository.findById(chequeIdd).orElseThrow(() -> new NotFoundException("Check with id: " + chequeIdd + " not found!"));
+        User user = userRepository.findById(chequeRequest.getUserId()).orElseThrow(() -> new NotFoundException("User with id: " + chequeRequest.getUserId() + " not found!"));
+        List<MenuItem> menuItems = menuItemRepository.findAllById(chequeRequest.getMenuItemNames());
+        cheque.setMenuItems(menuItems);
+        cheque.setUser(user);
+        chequeRepository.save(cheque);
+        return SimpleResponse.builder().status(HttpStatus.OK).message("Cheque with id: " + cheque.getId() + " is successfully updated!").build();
     }
 
     @Override
     public SimpleResponse deleteByIdCheque(Long chequeId) {
-        chequeRepository.findById(chequeId).orElseThrow(
+        Cheque cheque = chequeRepository.findById(chequeId).orElseThrow(
                 () -> new NotFoundException("Cheque with id: " + chequeId + " is no exist"));
-        chequeRepository.deleteById(chequeId);
+        chequeRepository.delete(cheque);
         return SimpleResponse
                 .builder()
                 .status(HttpStatus.OK)
                 .message("Delete Cheque..")
                 .build();
     }
+
+    @Override
+    public CheckOneDayUserResponse totalSumByUser(CheckOneDayUserRequest oneDayUserRequest) {
+        User user = userRepository.findById(oneDayUserRequest.getUserId()).orElseThrow(
+                () -> new NotFoundException("User with id : " + oneDayUserRequest.getUserId() + "is not found!"));
+        int chequeCount = 0;
+        int totalAmount = 0;
+        if (user.getRole().equals(Role.WAITER)) {
+            for (Cheque che : user.getCheques()) {
+                if (che.getCreatedAt().isEqual(oneDayUserRequest.getDate())) {
+                    int service = che.getPriceAverage() * user.getRestaurant().getService() / 100;
+                    totalAmount += service + che.getPriceAverage();
+                    chequeCount++;
+                }
+            }
+        } else {
+            throw new AlreadyExistException("This User already exists! ");
+        }
+        return CheckOneDayUserResponse.builder()
+                .averageGrandTotal(totalAmount)
+                .numberOfCheques(chequeCount)
+                .fullName(user.getFirstName() + " " + user.getLastName())
+                .build();
+
+
+    }
+
+    @Override
+    public CheckOneDayRestaurantResponse totalAvgByRestaurant(CheckOneDayRestaurantRequest oneDayRestaurantRequest) {
+        Restaurant restaurant = restaurantRepository.findRestaurantByName(oneDayRestaurantRequest.getRestaurantName())
+                .orElseThrow(() -> new NotFoundException("Restaurant with name: " + oneDayRestaurantRequest.getRestaurantName() + " is not found!"));
+        int numberOfCheques = 0;
+        int totalAmount = 0;
+        for (User userWaiter : restaurant.getUsers()) {
+            if (userWaiter.getRole().equals(Role.WAITER)) {
+                for (Cheque userCheque : userWaiter.getCheques()) {
+                    if (userCheque.getCreatedAt().isEqual(oneDayRestaurantRequest.getDate())) {
+                        int restaurantService = userCheque.getPriceAverage() * restaurant.getService() / 100;
+                        totalAmount += restaurantService + userCheque.getPriceAverage();
+                        numberOfCheques++;
+                    }
+                }
+            }
+        }
+
+        CheckOneDayRestaurantResponse chequeOfRestaurantAmountDayResponse = new CheckOneDayRestaurantResponse();
+        chequeOfRestaurantAmountDayResponse.setAverageGrandTotal(totalAmount / numberOfCheques);
+        chequeOfRestaurantAmountDayResponse.setDate(oneDayRestaurantRequest.getDate());
+        chequeOfRestaurantAmountDayResponse.setNumberOfCheques(numberOfCheques);
+        return chequeOfRestaurantAmountDayResponse;
+    }
+
+
 }
 
