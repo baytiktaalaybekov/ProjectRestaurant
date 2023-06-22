@@ -14,6 +14,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import peaksoft.repository.UserRepository;
 
+
+
+
+
 @EnableWebMvc
 @Configuration
 @EnableMethodSecurity

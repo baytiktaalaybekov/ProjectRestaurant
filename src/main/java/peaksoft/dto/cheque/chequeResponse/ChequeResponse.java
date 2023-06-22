@@ -1,22 +1,21 @@
 package peaksoft.dto.cheque.chequeResponse;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import peaksoft.entity.MenuItem;
 
-import java.math.BigDecimal;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Getter @Setter
-@Builder
 public class ChequeResponse {
 
     private Long id;
 
+    private ZonedDateTime date;
+
     private String fullName;
 
-    private List<MenuItem> items;
+    private List<MenuItemChequeResponse> items;
 
     private int priceAverage;
 
@@ -24,13 +23,12 @@ public class ChequeResponse {
 
     private int grandTotal;
 
-    public ChequeResponse(Long id, String fullName, List<MenuItem> items, int priceAverage, int service, int grandTotal) {
+    public ChequeResponse(Long id, ZonedDateTime date, String fullName, int priceAverage, int service) {
         this.id = id;
+        this.date = date;
         this.fullName = fullName;
-        this.items = items;
         this.priceAverage = priceAverage;
         this.service = service;
-        this.grandTotal = grandTotal;
     }
 
     public ChequeResponse() {

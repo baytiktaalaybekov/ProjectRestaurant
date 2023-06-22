@@ -1,22 +1,14 @@
 package peaksoft.service.Impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import peaksoft.config.jwt.JwtUtil;
 import peaksoft.dto.SimpleResponse;
 import peaksoft.dto.cheque.chequeRequest.CheckOneDayUserRequest;
 import peaksoft.dto.cheque.chequeRequest.ChequeRequest;
 import peaksoft.dto.cheque.chequeResponse.CheckOneDayUserResponse;
-import peaksoft.dto.cheque.chequeResponse.ChequeResponse;
-import peaksoft.dto.pagination.PaginationChequeResponse;
-import peaksoft.dto.pagination.PaginationUserResponse;
 import peaksoft.dto.restaurant.restaurantRequest.CheckOneDayRestaurantRequest;
 import peaksoft.dto.restaurant.restaurantResponse.CheckOneDayRestaurantResponse;
-import peaksoft.dto.user.userResponse.UserResponse;
 import peaksoft.entity.Cheque;
 import peaksoft.entity.MenuItem;
 import peaksoft.entity.Restaurant;
@@ -40,18 +32,19 @@ public class ChequesSeImpl implements ChequesService {
 
     private final ChequeRepository chequeRepository;
     private final MenuItemRepository menuItemRepository;
-    private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
     private final RestaurantRepository restaurantRepository;
 
     @Override
     public SimpleResponse saveCheque(ChequeRequest chequeRequest) {
-        User user = userRepository.findById(chequeRequest.getUserId()).orElseThrow();
+        User user = userRepository.findById(chequeRequest.getUserId()).orElseThrow(
+                ()-> new NotFoundException("User with id: " + chequeRequest.getUserId()+ " Not Found"));
         Cheque cheque = new Cheque();
         List<MenuItem> menuItemList = new ArrayList<>();
         int sum = 0;
         for (Long manuItem : chequeRequest.getMenuItemNames()) {
-            MenuItem menuItem = menuItemRepository.findById(manuItem).orElseThrow(() -> new NotFoundException("This manu item is not found"));
+            MenuItem menuItem = menuItemRepository.findById(manuItem).orElseThrow(
+                    () -> new NotFoundException("This manu item is not found"));
             menuItem.addCheque(cheque);
             menuItemList.add(menuItem);
             sum += menuItem.getPrice();
@@ -64,26 +57,7 @@ public class ChequesSeImpl implements ChequesService {
         return SimpleResponse.builder().status(HttpStatus.OK).message("Successfully saved!!").build();
 
     }
-
-    @Override
-    public PaginationChequeResponse getAllCheques(int pageSize, int currentPage) {
-        Pageable pageable= PageRequest.of(currentPage-1,pageSize);
-        Page<ChequeResponse> allUsers=chequeRepository.getAllCheques(pageable);
-        return PaginationChequeResponse
-                .builder()
-                .users(allUsers.getContent())
-                .page(allUsers.getNumber()+1)
-                .size(allUsers.getTotalPages())
-                .build();
-
-    }
-
-    @Override
-    public ChequeResponse getByIdCheque(Long chequeId) {
-        return null;
-
-    }
-
+    
     @Override
     public SimpleResponse updateCheque(Long chequeIdd, ChequeRequest chequeRequest) {
         Cheque cheque = chequeRepository.findById(chequeIdd).orElseThrow(() -> new NotFoundException("Check with id: " + chequeIdd + " not found!"));
@@ -157,7 +131,6 @@ public class ChequesSeImpl implements ChequesService {
         chequeOfRestaurantAmountDayResponse.setNumberOfCheques(numberOfCheques);
         return chequeOfRestaurantAmountDayResponse;
     }
-
 
 }
 

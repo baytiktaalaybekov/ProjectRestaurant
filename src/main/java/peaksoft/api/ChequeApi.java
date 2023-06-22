@@ -7,8 +7,6 @@ import peaksoft.dto.SimpleResponse;
 import peaksoft.dto.cheque.chequeRequest.CheckOneDayUserRequest;
 import peaksoft.dto.cheque.chequeRequest.ChequeRequest;
 import peaksoft.dto.cheque.chequeResponse.CheckOneDayUserResponse;
-import peaksoft.dto.cheque.chequeResponse.ChequeResponse;
-import peaksoft.dto.pagination.PaginationChequeResponse;
 import peaksoft.dto.restaurant.restaurantRequest.CheckOneDayRestaurantRequest;
 import peaksoft.dto.restaurant.restaurantResponse.CheckOneDayRestaurantResponse;
 import peaksoft.service.ChequesService;
@@ -26,17 +24,6 @@ public class ChequeApi {
         return chequesService.saveCheque(chequeRequest);
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @GetMapping
-    public PaginationChequeResponse getAllCheque(@RequestParam int pageSize, int currentPage) {
-        return chequesService.getAllCheques(pageSize, currentPage);
-    }
-
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @GetMapping("/{cheId}")
-    public ChequeResponse getChequeById(@PathVariable Long cheId) {
-        return chequesService.getByIdCheque(cheId);
-    }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{cheId}")
@@ -44,10 +31,12 @@ public class ChequeApi {
         return chequesService.deleteByIdCheque(cheId);
     }
 
+
     @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/{chequeId}")
     public SimpleResponse update(@PathVariable Long chequeId, @RequestBody ChequeRequest chequeRequest) {
         return chequesService.updateCheque(chequeId, chequeRequest);
+
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -61,5 +50,6 @@ public class ChequeApi {
     public CheckOneDayRestaurantResponse checkOneDayRestaurantResponse(@RequestBody CheckOneDayRestaurantRequest checkOneDayRestaurantRequest) {
         return chequesService.totalAvgByRestaurant(checkOneDayRestaurantRequest);
     }
+
 
 }

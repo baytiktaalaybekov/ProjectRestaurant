@@ -1,17 +1,11 @@
 package peaksoft.service.Impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import peaksoft.dto.SimpleResponse;
-import peaksoft.dto.pagination.PaginationStopListResponse;
-import peaksoft.dto.pagination.PaginationUserResponse;
 import peaksoft.dto.stopList.stopListRequest.StopListRequest;
 import peaksoft.dto.stopList.stopListResponse.StopListResponse;
-import peaksoft.dto.user.userResponse.UserResponse;
 import peaksoft.entity.MenuItem;
 import peaksoft.entity.StopList;
 import peaksoft.exception.AlreadyExistException;
@@ -52,15 +46,8 @@ public class StopListSerImpl implements StopListService {
     }
 
     @Override
-    public PaginationStopListResponse getAllStopList(int pageSize,int currentPage) {
-        Pageable pageable= PageRequest.of(currentPage-1,pageSize);
-        Page<StopListResponse> allUsers=stopListRepository.getAllStopList(pageable);
-        return PaginationStopListResponse
-                .builder()
-                .users(allUsers.getContent())
-                .page(allUsers.getNumber()+1)
-                .size(allUsers.getTotalPages())
-                .build();
+    public List<StopListResponse> getAllStopList() {
+      return stopListRepository.getAllStopList();
     }
 
     @Override

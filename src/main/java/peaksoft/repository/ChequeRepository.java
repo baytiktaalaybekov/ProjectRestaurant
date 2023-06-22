@@ -1,23 +1,28 @@
 package peaksoft.repository;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import peaksoft.dto.cheque.chequeResponse.ChequeResponse;
+import peaksoft.dto.cheque.chequeResponse.MenuItemChequeResponse;
 import peaksoft.entity.Cheque;
 
-import java.time.LocalDate;
-import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.Optional;
 
 public interface ChequeRepository extends JpaRepository<Cheque, Long> {
 
 
-    Page<ChequeResponse> getAllCheques(Pageable pageable);
+//    Page<ChequeResponse> getAllCheques(Pageable pageable);
 
+//    @Query("SELECT new peaksoft.dto.cheque.chequeResponse.ChequeResponse(c.id, c.createdAt, CONCAT(c.users.firstName, ' ', c.users.lastName), SUM(m.price), m.restaurant.service) " +
+//            "FROM Cheque c " +
+//            "JOIN c.menuItems m " +
+//            "WHERE c.users.id = :userId " +
+//            "GROUP BY c.id, c.createdAt, c.users.firstName, c.users.lastName, m.restaurant.service" )
+//    List<ChequeResponse> findAllCheques(Long userId);
 
+//
+//    @Query("select new peaksoft.dto.cheque.chequeResponse.MenuItemChequeResponse(m.id, m.name, m.price, count(m)) from MenuItem m join m.cheques c where c.id = :chequeId group by m.id, m.name, m.price")
+//    List<MenuItemChequeResponse> getFoods (Long chequeId);
 
 
 

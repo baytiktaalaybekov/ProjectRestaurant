@@ -11,7 +11,6 @@ public class CheckOneDayUserResponse {
 
     private String fullName;
 
-
     private int numberOfCheques;
 
     private int averageGrandTotal;
@@ -19,7 +18,6 @@ public class CheckOneDayUserResponse {
 
     public CheckOneDayUserResponse(String fullName,  int numberOfCheques, int averageGrandTotal) {
          this.fullName = fullName;
-//        this.numberOfUsers = numberOfUsers;
         this.numberOfCheques = numberOfCheques;
         this.averageGrandTotal = averageGrandTotal;
     }

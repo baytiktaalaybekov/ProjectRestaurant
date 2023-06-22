@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import peaksoft.dto.SimpleResponse;
-import peaksoft.dto.pagination.PaginationSubCategoryResponse;
 import peaksoft.dto.subcategory.subcategoryRequest.SubcategoryRequest;
 import peaksoft.dto.subcategory.subcategoryResponse.SubcategoryResponse;
 import peaksoft.entity.SubCategory;
@@ -28,8 +27,8 @@ public class SubcategoryApi {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
-    public PaginationSubCategoryResponse getAllSubcategory(@RequestParam int pageSize, int currentPage) {
-        return subcategoryService.getAllBySubCategory(pageSize, currentPage);
+    public List<SubcategoryResponse> getAllSubcategory() {
+        return subcategoryService.getAllBySubCategory();
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -55,6 +54,7 @@ public class SubcategoryApi {
     @GetMapping("/find")
     public Map<String, List<SubCategory>> findAllGroupByCategory() {
         return subcategoryService.findAllGroupByCategory();
+
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")

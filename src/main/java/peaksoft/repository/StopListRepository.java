@@ -13,8 +13,10 @@ import java.util.Optional;
 
 public interface StopListRepository extends JpaRepository<StopList, Long> {
 
+//    @Query("select new peaksoft.dto.stopList.stopListResponse.StopListResponse(s.id,s.reason,s.date,s.menuItem.name) from StopList s")
+//    Page<StopListResponse> getAllStopList(Pageable pageable);
     @Query("select new peaksoft.dto.stopList.stopListResponse.StopListResponse(s.id,s.reason,s.date,s.menuItem.name) from StopList s")
-    Page<StopListResponse> getAllStopList(Pageable pageable);
+    List<StopListResponse> getAllStopList();
 
     @Query("select new peaksoft.dto.stopList.stopListResponse.StopListResponse(s.id,s.reason,s.date,s.menuItem.name) from StopList s where s.id= :id")
     Optional<StopListResponse> getStopListById(Long id);

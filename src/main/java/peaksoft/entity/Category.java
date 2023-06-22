@@ -25,8 +25,7 @@ public class Category {
 
     @OneToMany(mappedBy = "categories",cascade = {ALL},fetch = FetchType.EAGER)
     private List<SubCategory> subcategories=new ArrayList<>();
-//
-//
+
     public void addSubCategory(SubCategory subCategory)
     {
         subcategories.add(subCategory);

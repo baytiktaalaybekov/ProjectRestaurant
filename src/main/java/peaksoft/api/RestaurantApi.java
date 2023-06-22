@@ -21,8 +21,8 @@ public class RestaurantApi {
     private final RestaurantService restaurantService;
 
     @GetMapping
-    public PaginationRestaurantResponse getAllRestaurant(@RequestParam int pageSize, int currentPage) {
-        return restaurantService.getAllRestaurantResponse(pageSize, currentPage);
+    public List<RestaurantResponse> getAllRestaurant() {
+        return restaurantService.getAllRestaurantResponse();
     }
 
     @PermitAll()

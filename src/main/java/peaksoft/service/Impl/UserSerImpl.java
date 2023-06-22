@@ -3,9 +3,6 @@ package peaksoft.service.Impl;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,7 +10,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import peaksoft.config.jwt.JwtUtil;
 import peaksoft.dto.SimpleResponse;
-import peaksoft.dto.pagination.PaginationUserResponse;
 import peaksoft.dto.user.userRequest.UserRequest;
 import peaksoft.dto.user.userResponse.UserResponse;
 import peaksoft.dto.user.userResponse.UserResponses;
@@ -28,6 +24,7 @@ import peaksoft.service.UserService;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -103,9 +100,9 @@ public class UserSerImpl implements UserService {
                         .build();
             }
         }
-        Restaurant restaurant=restaurantRepository.findById(1L).orElseThrow(()->new NotFoundException("Not"));
-        var count=restaurant.getUsers().size();
-        if(count>15){
+        Restaurant restaurant = restaurantRepository.findById(1L).orElseThrow(() -> new NotFoundException("Not"));
+        var count = restaurant.getUsers().size();
+        if (count > 15) {
             throw new BadRequestException("Not vacancy");
         }
         User user = new User();
@@ -116,7 +113,6 @@ public class UserSerImpl implements UserService {
                 .message("Successfully saved")
                 .build();
     }
-
 
 
     @PostConstruct
@@ -136,17 +132,9 @@ public class UserSerImpl implements UserService {
     }
 
 
-
     @Override
-    public PaginationUserResponse getAllUsers(int pageSize,int currentPage) {
-        Pageable pageable= PageRequest.of(currentPage-1,pageSize);
-        Page<UserResponse> allUsers=userRepository.getAllUsers(pageable);
-        return PaginationUserResponse
-                .builder()
-                .users(allUsers.getContent())
-                .page(allUsers.getNumber()+1)
-                .size(allUsers.getTotalPages())
-                .build();
+    public List<UserResponse> getAllUsers() {
+        return userRepository.getAllUsers();
     }
 
     @Override
@@ -211,14 +199,13 @@ public class UserSerImpl implements UserService {
             userRepository.delete(user);
             return SimpleResponse.builder().status(HttpStatus.OK).message("Successfully deleted").build();
 
-        }else {
+        } else {
             return SimpleResponse.builder()
                     .status(HttpStatus.BAD_REQUEST)
                     .message("Write correctly!!!")
                     .build();
         }
     }
-
 
 
     private void userMapToResponse(UserRequest userRequest, User user1) {

@@ -2,19 +2,13 @@ package peaksoft.service.Impl;
 
 import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import peaksoft.dto.SimpleResponse;
-import peaksoft.dto.pagination.PaginationRestaurantResponse;
-import peaksoft.dto.pagination.PaginationUserResponse;
 import peaksoft.dto.restaurant.restaurantRequest.RestaurantRequest;
 import peaksoft.dto.restaurant.restaurantResponse.RestaurantDetailsResponse;
 import peaksoft.dto.restaurant.restaurantResponse.RestaurantResponse;
-import peaksoft.dto.user.userResponse.UserResponse;
 import peaksoft.entity.Restaurant;
 import peaksoft.entity.User;
 import peaksoft.exception.NotFoundException;
@@ -54,15 +48,8 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public PaginationRestaurantResponse getAllRestaurantResponse(int pageSize,int currentPage) {
-        Pageable pageable= PageRequest.of(currentPage-1,pageSize);
-        Page<RestaurantResponse> allUsers=restaurantRepository.getAllRestaurantResponse(pageable);
-        return PaginationRestaurantResponse
-                .builder()
-                .users(allUsers.getContent())
-                .page(allUsers.getNumber()+1)
-                .size(allUsers.getTotalPages())
-                .build();
+    public List<RestaurantResponse> getAllRestaurantResponse() {
+        return restaurantRepository.getAllRestaurantResponse();
     }
 
     @Override

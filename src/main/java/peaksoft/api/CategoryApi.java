@@ -9,6 +9,8 @@ import peaksoft.dto.category.categoryResponse.CategoryResponse;
 import peaksoft.dto.pagination.PaginationCategoryResponse;
 import peaksoft.service.CategoryService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/categories")
 @RequiredArgsConstructor
@@ -25,8 +27,8 @@ public class CategoryApi {
 
     @GetMapping
     @PreAuthorize("permitAll()")
-    public PaginationCategoryResponse getAll(@RequestParam int pageSize, int currentPage) {
-        return categoryService.getAllCategory(pageSize, currentPage);
+    public List<CategoryResponse> getAll() {
+        return categoryService.getAllCategory();
     }
 
     @DeleteMapping("/{id}")

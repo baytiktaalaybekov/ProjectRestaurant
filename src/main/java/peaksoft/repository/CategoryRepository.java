@@ -14,7 +14,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
 
     @Query("select new peaksoft.dto.category.categoryResponse.CategoryResponse(c.id,c.name)from Category c")
-    Page<CategoryResponse> getAllCategory(Pageable pageable);
+    List<CategoryResponse> getAllCategory();
 
     @Query("select new peaksoft.dto.category.categoryResponse.CategoryResponse(c.id,c.name)from Category c where c.id=:id")
     Optional<CategoryResponse> getByIdCategoryId(Long id);

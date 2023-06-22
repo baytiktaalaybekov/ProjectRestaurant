@@ -2,17 +2,11 @@ package peaksoft.service.Impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import peaksoft.dto.SimpleResponse;
 import peaksoft.dto.category.categoryRequest.CategoryRequest;
 import peaksoft.dto.category.categoryResponse.CategoryResponse;
-import peaksoft.dto.pagination.PaginationCategoryResponse;
-import peaksoft.dto.pagination.PaginationUserResponse;
-import peaksoft.dto.user.userResponse.UserResponse;
 import peaksoft.entity.Category;
 import peaksoft.exception.NotFoundException;
 import peaksoft.repository.CategoryRepository;
@@ -39,15 +33,8 @@ public class CategorySeImpl implements CategoryService {
     }
 
     @Override
-    public PaginationCategoryResponse getAllCategory(int pageSize,int currentPage) {
-        Pageable pageable= PageRequest.of(currentPage-1,pageSize);
-        Page<CategoryResponse> allUsers=categoryRepository.getAllCategory(pageable);
-        return PaginationCategoryResponse
-                .builder()
-                .users(allUsers.getContent())
-                .page(allUsers.getNumber()+1)
-                .size(allUsers.getTotalPages())
-                .build();
+    public List<CategoryResponse> getAllCategory() {
+        return categoryRepository.getAllCategory();
 
     }
 

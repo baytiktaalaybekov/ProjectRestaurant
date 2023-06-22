@@ -2,17 +2,11 @@ package peaksoft.service.Impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import peaksoft.dto.SimpleResponse;
 import peaksoft.dto.menuItem.menuItemRequest.MenuItemRequest;
 import peaksoft.dto.menuItem.menuItemResponse.MenuItemResponse;
-import peaksoft.dto.pagination.PaginationMenuItemResponse;
-import peaksoft.dto.pagination.PaginationUserResponse;
-import peaksoft.dto.user.userResponse.UserResponse;
 import peaksoft.entity.MenuItem;
 import peaksoft.entity.Restaurant;
 import peaksoft.entity.SubCategory;
@@ -63,15 +57,9 @@ public class MenuItemSerImpl implements MenuItemService {
     }
 
     @Override
-    public PaginationMenuItemResponse getAllMenus(int pageSize,int currentPage) {
-        Pageable pageable= PageRequest.of(currentPage-1,pageSize);
-        Page<MenuItemResponse> allUsers=menuItemRepository.getAllMenus(pageable);
-        return PaginationMenuItemResponse
-                .builder()
-                .users(allUsers.getContent())
-                .page(allUsers.getNumber()+1)
-                .size(allUsers.getTotalPages())
-                .build();    }
+    public List<MenuItemResponse> getAllMenus() {
+        return menuItemRepository.getAllMenus();
+    }
 
     @Override
     public MenuItemResponse getByMenuId(Long menuId) {

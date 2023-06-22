@@ -12,7 +12,7 @@ public interface StopListService {
 
     SimpleResponse saveStopList(StopListRequest stopListRequest);
 
-    PaginationStopListResponse getAllStopList(int pageSize,int currentPage);
+    List<StopListResponse> getAllStopList();
 
     StopListResponse getStopListById(Long id);
 

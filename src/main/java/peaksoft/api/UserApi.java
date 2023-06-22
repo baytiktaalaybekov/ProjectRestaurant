@@ -4,10 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import peaksoft.dto.SimpleResponse;
-import peaksoft.dto.pagination.PaginationUserResponse;
+
 import peaksoft.dto.user.userRequest.UserRequest;
 import peaksoft.dto.user.userResponse.UserResponse;
 import peaksoft.service.UserService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -15,7 +17,6 @@ import peaksoft.service.UserService;
 public class UserApi {
 
     private final UserService userService;
-
 
     @PostMapping
     public SimpleResponse register(@RequestBody UserRequest userRequest) {
@@ -30,8 +31,8 @@ public class UserApi {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
-    public PaginationUserResponse getAllUSer(@RequestParam int pageSize, int currentPage) {
-        return userService.getAllUsers(pageSize, currentPage);
+    public List<UserResponse> getAllUSer() {
+        return userService.getAllUsers();
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN','WAITER,CHEF')")

@@ -13,7 +13,7 @@ public interface MenuItemService {
 
     SimpleResponse saveManu( MenuItemRequest menuRequest);
 
-    PaginationMenuItemResponse getAllMenus(int pageSize, int currentPage);
+    List<MenuItemResponse> getAllMenus();
 
     MenuItemResponse getByMenuId(Long menuId);
 

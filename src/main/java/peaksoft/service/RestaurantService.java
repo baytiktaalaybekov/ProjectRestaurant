@@ -13,7 +13,7 @@ public interface RestaurantService {
 
     SimpleResponse saveRestaurant(RestaurantRequest restaurantRequest);
 
-    PaginationRestaurantResponse getAllRestaurantResponse(int pageSize, int currentPage);
+    List<RestaurantResponse> getAllRestaurantResponse();
 
     RestaurantResponse getRestaurantResponseById(Long restaurantId);
 

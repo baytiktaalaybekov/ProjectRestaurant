@@ -1,8 +1,6 @@
 package peaksoft.service;
 
-import org.springframework.data.domain.Pageable;
 import peaksoft.dto.SimpleResponse;
-import peaksoft.dto.pagination.PaginationUserResponse;
 import peaksoft.dto.user.userRequest.UserRequest;
 import peaksoft.dto.user.userResponse.UserResponse;
 import peaksoft.dto.user.userResponse.UserResponses;
@@ -15,7 +13,7 @@ public interface UserService {
 
     SimpleResponse register(UserRequest userRequest);
 
-    PaginationUserResponse getAllUsers(int pageSize,int currentPage);
+    List<UserResponse> getAllUsers();
 
     UserResponse getUserResponseById(Long id);
 
@@ -25,5 +23,4 @@ public interface UserService {
 
     SimpleResponse answer(Long restaurantId, Long userId, String word);
 
-//    PaginationResponse getPagination(int size, int page);
 }

@@ -12,7 +12,7 @@ public interface CategoryService {
 
     SimpleResponse saveCategory(CategoryRequest categoryRequest);
 
-    PaginationCategoryResponse getAllCategory(int pageSize,int currentPage);
+    List<CategoryResponse> getAllCategory();
 
     CategoryResponse getByIdCategoryId(Long id);
 
