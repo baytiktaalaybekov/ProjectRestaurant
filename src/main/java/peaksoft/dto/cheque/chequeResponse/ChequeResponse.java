@@ -2,6 +2,7 @@ package peaksoft.dto.cheque.chequeResponse;
 
 import lombok.Getter;
 import lombok.Setter;
+import peaksoft.dto.menuItem.menuItemResponse.MenuItemResponse;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -15,7 +16,7 @@ public class ChequeResponse {
 
     private String fullName;
 
-    private List<MenuItemChequeResponse> items;
+    private List<MenuItemResponse> items;
 
     private int priceAverage;
 

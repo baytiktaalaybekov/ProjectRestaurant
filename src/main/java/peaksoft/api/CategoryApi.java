@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import peaksoft.dto.SimpleResponse;
 import peaksoft.dto.category.categoryRequest.CategoryRequest;
 import peaksoft.dto.category.categoryResponse.CategoryResponse;
-import peaksoft.dto.pagination.PaginationCategoryResponse;
 import peaksoft.service.CategoryService;
 
 import java.util.List;

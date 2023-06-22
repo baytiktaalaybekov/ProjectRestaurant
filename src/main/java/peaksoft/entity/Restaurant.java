@@ -19,8 +19,8 @@ import java.util.List;
 public class Restaurant {
     @Id
     @SequenceGenerator(name = "restaurant_id_gen"
-            ,sequenceName = "restaurant_id_seq",allocationSize = 1)
-    @GeneratedValue(generator = "restaurant_id_gen",strategy = GenerationType.SEQUENCE)
+            , sequenceName = "restaurant_id_seq", allocationSize = 1)
+    @GeneratedValue(generator = "restaurant_id_gen", strategy = GenerationType.SEQUENCE)
     private Long id;
 
     private String name;
@@ -36,12 +36,11 @@ public class Restaurant {
     private int service;
 
 
-    @OneToMany(mappedBy = "restaurant",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     private List<User> users = new ArrayList<>();
-//
-//
-    @OneToMany(mappedBy = "restaurant",cascade = CascadeType.ALL)
-    private List <MenuItem> menuItems=new ArrayList<>();
+
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    private List<MenuItem> menuItems = new ArrayList<>();
 
     public void addMenuItem(MenuItem menuItem) {
         this.menuItems.add(menuItem);

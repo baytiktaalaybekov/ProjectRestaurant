@@ -42,6 +42,7 @@ public class JwtUtil {
         DecodedJWT jwt = jwtVerifier.verify(token);
         return jwt.getClaim("username").asString();
 
+        
     }
 
     public User getAuthentication() {

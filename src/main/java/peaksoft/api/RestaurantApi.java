@@ -1,11 +1,9 @@
 package peaksoft.api;
 
-import jakarta.annotation.security.PermitAll;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import peaksoft.dto.SimpleResponse;
-import peaksoft.dto.pagination.PaginationRestaurantResponse;
 import peaksoft.dto.restaurant.restaurantRequest.RestaurantRequest;
 import peaksoft.dto.restaurant.restaurantResponse.RestaurantDetailsResponse;
 import peaksoft.dto.restaurant.restaurantResponse.RestaurantResponse;
@@ -25,7 +23,6 @@ public class RestaurantApi {
         return restaurantService.getAllRestaurantResponse();
     }
 
-    @PermitAll()
     @PostMapping()
     @PreAuthorize("hasAuthority('ADMIN')")
     public SimpleResponse saveRestaurant(@RequestBody RestaurantRequest restaurantRequest) {
@@ -53,7 +50,7 @@ public class RestaurantApi {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/{restaurantId}/count")
-    public List<RestaurantDetailsResponse> sort(@PathVariable Long restaurantId) {
+    public List<RestaurantDetailsResponse> count(@PathVariable Long restaurantId) {
         return restaurantService.countUser(restaurantId);
     }
 

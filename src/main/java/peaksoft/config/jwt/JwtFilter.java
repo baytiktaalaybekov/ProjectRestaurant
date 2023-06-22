@@ -25,16 +25,13 @@ public class JwtFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
 
-
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
-
         String TokenHeader = request.getHeader("Authorization");
         if (TokenHeader != null && TokenHeader.startsWith("Bearer ")) {
             String token = TokenHeader.substring(7);
-
             try {
                 if (StringUtils.hasText(token)) {
                     String username = jwtUtil.validateToken(token);
@@ -52,5 +49,7 @@ public class JwtFilter extends OncePerRequestFilter {
         }
         filterChain.doFilter(request, response);
     }
+
+
 
 }
